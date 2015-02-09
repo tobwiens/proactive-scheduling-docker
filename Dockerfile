@@ -1,15 +1,22 @@
 # Run on top of java 7
 FROM dockerfile/java:oracle-java7
 MAINTAINER Tobias Wiens <tobwiens@gmail.com>
+
+# Environment variables
+ENV PROACTIVE_ZIP ProActiveWorkflowsScheduling-linux-x64-6.1.0.zip
+ENV PROACTIVE_PATH_TO_ZIP http://www.activeeon.com/public_content/releases/ProActive/6.1.0
+
 # Download the proactive scheduler
 WORKDIR /data
-ADD http://www.activeeon.com/public_content/releases/ProActive/6.1.0/ProActiveWorkflowsScheduling-linux-x64-6.1.0.zip
+RUN ["/bin/bash", "-c", "wget $PROACTIVE_PATH_TO_ZIP/$PROACTIVE_ZIP"]
 
-WORKDIR /data/programming
-# The union file system (docker) seems to make all files writeable even if they are set to only be readable.
-# Therefore a few test cases will be modified, meaning the assertions will be removed
+# Create a one line python script which unzips a file
+#RUN alias unzip-stream="python -c \"import #zipfile,sys,StringIO;zipfile.ZipFile(StringIO.StringIO(sys.stdin.read())).extractall(sys.argv[1] if len(sys.argv) == 2 else '.')\""
 
-# Build sources
-RUN ./gradlew build
-# Start minimal proactive node - standard is port 1099
-ENTRYPOINT /data/programming/bin/startNode.sh dockerNode
+#
+
+# Unzip scheduler and remove zip file
+RUN ["/bin/bash", "-c", "unzip $PROACTIVE_ZIP"]
+# RUN ["/bin/bash", "-c", "rm $PROACTIVE_ZIP"] # It is saved inside the layers anyway
+
+CMD /data/ProActiveWorkflowsScheduling-linux-x64-6.1.0/bin/proactive-server 
