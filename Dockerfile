@@ -1,9 +1,9 @@
 # Run on top of java 7
 FROM dockerfile/java:oracle-java7
 MAINTAINER Tobias Wiens <tobwiens@gmail.com>
-# Checkout repository
+# Download the proactive scheduler
 WORKDIR /data
-ADD http://www.activeeon.com/public_content/releases/ProActive/6.1.0/http://www.activeeon.com/public_content/releases/ProActive/6.1.0/ProActiveWorkflowsScheduling-linux-x64-6.1.0.zip
+ADD http://www.activeeon.com/public_content/releases/ProActive/6.1.0/ProActiveWorkflowsScheduling-linux-x64-6.1.0.zip
 
 WORKDIR /data/programming
 # The union file system (docker) seems to make all files writeable even if they are set to only be readable.
