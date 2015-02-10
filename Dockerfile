@@ -18,4 +18,9 @@ RUN ["/bin/bash", "-c", "wget $PROACTIVE_PATH_TO_ZIP/$PROACTIVE_ZIP"]
 RUN ["/bin/bash", "-c", "unzip $PROACTIVE_ZIP"]
 #RUN ["/bin/bash", "-c", "rm $PROACTIVE_ZIP"] # It is saved inside the layers anyway
 
-CMD /data/ProActiveWorkflowsScheduling-linux-x64-6.1.0/bin/proactive-server 
+# Add bin to PATH for easier execution via CMD
+ENV PATH /data/ProActiveWorkflowsScheduling-linux-x64-6.1.0/bin:$PATH
+
+# Standard command
+#CMD ["/bin/bash", "-c", "/data/ProActiveWorkflowsScheduling-linux-x64-6.1.0/bin/proactive-node -Dproactive.useIPaddress=true"]
+ENTRYPOINT ["proactive-node" ,"-Dproactive.useIPaddress=true"]
