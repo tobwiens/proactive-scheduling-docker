@@ -12,9 +12,7 @@ RUN apt-get update && sudo apt-get install python -y
 WORKDIR /data
 
 # Unzip inside memory
-#RUN ["/bin/bash", "-c", "wget -q -O- $PROACTIVE_URL_TO_ZIP/$PROACTIVE_ZIP | python -c \"import zipfile,sys,StringIO;data = StringIO.StringIO(sys.stdin.read());z = zipfile.ZipFile(data);dest = sys.argv[1] if len(sys.argv) == 2 else '.';z.extractall(dest)\" "]
-
-RUN ["/bin/bash", "-c", "wget -q -O- $PROACTIVE_URL_TO_ZIP/$PROACTIVE_ZIP | python -c \"import sys,zipfile,StringIO;data= StringIO.StringIO(sys.stdin.read());z = zipfile.ZipFile(data);dest = sys.argv[1] if len(sys.argv) == 2 else '.';[lambda zinfo: operator.setitem(zinfo, 'create_system', 3) for zinfo in z.filelist];z.extractall(dest)\" "]
+RUN ["/bin/bash", "-c", "wget -q -O- $PROACTIVE_URL_TO_ZIP/$PROACTIVE_ZIP | python -c \"import sys,zipfile,StringIO;data= StringIO.StringIO(sys.stdin.read());z = zipfile.ZipFile(data);dest = sys.argv[1] if len(sys.argv) == 2 else '.';z.extractall(dest)\" "]
 
 
 # Add bin to PATH for easier execution via CMD
