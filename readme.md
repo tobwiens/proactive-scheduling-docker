@@ -1,7 +1,6 @@
-# Proactive Scheduler Server
+# Proactive Scheduler Node
 
-Runs a proactive scheduler server.
+Runs a proactive scheduler node.
 
-Run with "docker run -p 8080:8080 tobwiens/proactive-scheduling"
-The webinterface will be available at port 8080.
+Run with "docker run tobwiens/proactive-scheduling -r pnp://[IP]:[PORT]/". 
 
