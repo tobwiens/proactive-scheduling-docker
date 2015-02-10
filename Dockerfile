@@ -14,4 +14,9 @@ WORKDIR /data
 # Unzip inside memory
 RUN ["/bin/bash", "-c", "wget -q -O- $PROACTIVE_URL_TO_ZIP/$PROACTIVE_ZIP | python -c \"import zipfile,sys,StringIO;zipfile.ZipFile(StringIO.StringIO(sys.stdin.read())).extractall(sys.argv[1] if len(sys.argv) == 2 else '.')\" "]
 
-CMD /data/ProActiveWorkflowsScheduling-linux-x64-6.1.0/bin/proactive-server 
+# Add bin to PATH for easier execution via CMD
+ENV PATH /data/ProActiveWorkflowsScheduling-linux-x64-6.1.0/bin:$PATH
+
+# Standard command
+#CMD ["/bin/bash", "-c", "/data/ProActiveWorkflowsScheduling-linux-x64-6.1.0/bin/proactive-node -Dproactive.useIPaddress=true"]
+ENTRYPOINT ["proactive-node" ,"-Dproactive.useIPaddress=true"]
