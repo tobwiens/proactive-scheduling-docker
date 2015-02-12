@@ -19,9 +19,8 @@ RUN ["/bin/bash", "-c", "curl $PROACTIVE_URL_TO_ZIP/$PROACTIVE_ZIP | python -c \
 ENV PATH /data/ProActiveWorkflowsScheduling-linux-x64-6.1.0/bin:$PATH
 
 # Unzipping with python is pretty annoying because all permission are lost - recover the most important ones
-RUN chmod +x /data/ProActiveWorkflowsScheduling-linux-x64-6.1.0/jre/bin/java
-RUN chmod +x /data/ProActiveWorkflowsScheduling-linux-x64-6.1.0/bin/proactive-node
-RUN chmod +x /data/ProActiveWorkflowsScheduling-linux-x64-6.1.0/bin/proactive-server
+RUN chmod +x /data/ProActiveWorkflowsScheduling-linux-x64-6.1.0/jre/bin/java /data/ProActiveWorkflowsScheduling-linux-x64-6.1.0/bin/proactive-node /data/ProActiveWorkflowsScheduling-linux-x64-6.1.0/bin/proactive-server
+
 
 # Standard command
 #CMD ["/bin/bash", "-c", "/data/ProActiveWorkflowsScheduling-linux-x64-6.1.0/bin/proactive-node -Dproactive.useIPaddress=true"]
